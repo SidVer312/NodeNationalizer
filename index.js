@@ -7,11 +7,17 @@ async function getData() {
     const url = await `https://api.nationalize.io/?name=${name}`;
     const response = await fetch(url);
     const data = await response.json();
-    const nameData = data.name;
-    const countryCode = data.country[0].country_id;
-    const probability = data.country[0].probability.toFixed(4);
+    
 
-    console.log('The person '+ nameData + ' is ' + ' likely to be from country code ' + countryCode + ' with a probability of ' + probability);
+    if(data.country.length === 0){
+        console.log("sorry! no data found!");
+    }
+    else{
+        const countryCode = data.country[0].country_id;
+        const probability = data.country[0].probability.toFixed(4);
+        console.log('The person '+ name + ' is ' + 'most likely to be from the country ' + countryCode + ' with a probability of ' + probability);
+    }
+
 }
 
 getData();
